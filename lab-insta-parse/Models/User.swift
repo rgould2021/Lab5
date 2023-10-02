@@ -8,6 +8,7 @@
 import Foundation
 
 // TODO: Pt 1 - Import Parse Swift
+import ParseSwift
 
 
 // TODO: Pt 1 - Create Parse User model
