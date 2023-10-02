@@ -43,6 +43,28 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private func logOut() {
         // TODO: Pt 1 - Log out Parse user.
+        // This will also remove the session from the Keychain, log out of linked services and all future calls to current will return nil.
+        User.logout { [weak self] result in
+
+            switch result {
+            case .success:
+
+                // Make sure UI updates are done on main thread when initiated from background thread.
+                DispatchQueue.main.async {
+
+                    // Instantiate the storyboard that contains the view controller you want to go to (i.e. destination view controller).
+                    let storyboard = UIStoryboard(name: Constants.storyboardIdentifier, bundle: nil)
+
+                    // Instantiate the destination view controller (in our case it's a navigation controller) from the storyboard.
+                    let viewController = storyboard.instantiateViewController(withIdentifier: Constants.loginNavigationControllerIdentifier)
+
+                    // Programmatically set the current displayed view controller.
+                    self?.window?.rootViewController = viewController
+                }
+            case .failure(let error):
+                print("❌ Log out error: \(error)")
+            }
+        }
 
     }
 
